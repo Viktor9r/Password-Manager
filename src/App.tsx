@@ -1,27 +1,15 @@
+/* eslint-disable no-console */
 import React from 'react';
 import './App.scss';
-
-interface Props {
-  onClick: () => void;
-}
-
-export const Provider: React.FC<Props> = React.memo(
-  ({ onClick, children }) => (
-    <button
-      type="button"
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  ),
-);
+import usersFromServer from './api/users.json';
+import passwordsFromServer from './api/passwords.json';
 
 export const App: React.FC = () => {
   return (
     <div className="starter">
-      <Provider onClick={() => ({})}>
-        <TodoList />
-      </Provider>
+      Hello world
+      {console.log(usersFromServer)}
+      {console.log(passwordsFromServer)}
     </div>
   );
 };
