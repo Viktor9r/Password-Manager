@@ -1,3 +1,9 @@
 .starter {
   font-size: 18px;
 }
+
+.page {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
