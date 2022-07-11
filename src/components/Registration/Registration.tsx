@@ -13,6 +13,7 @@ type Props = {
   setIsUserReg: Dispatch<SetStateAction<boolean>>,
   loadUsers: () => void,
   setLoginVisible: Dispatch<SetStateAction<boolean>>,
+  loadPasswords: () => void,
 };
 
 export const Registration: React.FC<Props> = ({
@@ -20,6 +21,7 @@ export const Registration: React.FC<Props> = ({
   setIsUserReg,
   loadUsers,
   setLoginVisible,
+  loadPasswords,
 }) => {
   const [newLogin, setNewLogin] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -59,6 +61,7 @@ export const Registration: React.FC<Props> = ({
   const backToLogin = () => {
     setShowRegistration(false);
     setLoginVisible(true);
+    setIsUserReg(false);
   };
 
   const addUser = (addedUser: UserNew) => {
@@ -98,6 +101,7 @@ export const Registration: React.FC<Props> = ({
     }
 
     loadUsers();
+    loadPasswords();
 
     clearForm();
   };

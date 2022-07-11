@@ -158,6 +158,7 @@ export const Login: React.FC<Props> = ({
              setIsUserReg={setIsUserReg}
              loadUsers={loadUsers}
              setLoginVisible={setLoginVisible}
+             loadPasswords={loadPasswords}
            />
          </>
        )}
