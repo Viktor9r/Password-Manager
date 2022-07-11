@@ -4,13 +4,6 @@ import React, { useState, useEffect } from 'react';
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import { Login } from './components/Login/Login';
-import usersFromServer from './api/users.json';
-import passwordsFromServer from './api/passwords.json';
-
-const loadDataOnce = () => {
-  localStorage.setItem('passwordsFromServer', JSON.stringify(passwordsFromServer));
-  localStorage.setItem('usersFromServer', JSON.stringify(usersFromServer));
-};
 
 export const App: React.FC = () => {
   const [passwords, setPasswords] = useState<PasswordNew[]>([]);
@@ -20,10 +13,6 @@ export const App: React.FC = () => {
 
     setUsers(localUsers);
   };
-
-  useEffect(() => {
-    loadDataOnce();
-  }, []);
 
   useEffect(() => {
     loadUsers();

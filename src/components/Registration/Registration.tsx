@@ -14,6 +14,7 @@ type Props = {
   loadUsers: () => void,
   setLoginVisible: Dispatch<SetStateAction<boolean>>,
   loadPasswords: () => void,
+  passwords: PasswordNew[],
 };
 
 export const Registration: React.FC<Props> = ({
@@ -22,6 +23,7 @@ export const Registration: React.FC<Props> = ({
   loadUsers,
   setLoginVisible,
   loadPasswords,
+  passwords,
 }) => {
   const [newLogin, setNewLogin] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -70,9 +72,7 @@ export const Registration: React.FC<Props> = ({
     const listWithAddedUser = [...oldUsers, addedUser];
 
     localStorage.setItem('usersFromServer', JSON.stringify(listWithAddedUser));
-    const oldPasswords = JSON.parse(localStorage.getItem('passwordsFromServer') || '[]');
-
-    const maxId = oldPasswords.reduce((acc: { b: number; }, curr: { b: number; }) => (
+    const maxId = passwords.reduce((acc, curr) => (
       acc.b > curr.b ? acc : curr
     ));
 
@@ -83,7 +83,7 @@ export const Registration: React.FC<Props> = ({
       appLogin: '',
       appPassword: '',
     };
-    const listWithHiddenPassword = [...oldPasswords, hiddenPassword];
+    const listWithHiddenPassword = [...passwords, hiddenPassword];
 
     localStorage.setItem('passwordsFromServer', JSON.stringify(listWithHiddenPassword));
   };
