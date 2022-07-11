@@ -72,20 +72,32 @@ export const Registration: React.FC<Props> = ({
     const listWithAddedUser = [...oldUsers, addedUser];
 
     localStorage.setItem('usersFromServer', JSON.stringify(listWithAddedUser));
-    const maxId = passwords.reduce((acc, curr) => (
-      acc.b > curr.b ? acc : curr
-    ));
+    if (passwords.length > 1) {
+      const maxId = passwords.reduce((acc, curr) => (
+        acc.b > curr.b ? acc : curr
+      ));
+      const hiddenPassword: PasswordNew = {
+        id: maxId.id + 1,
+        userId: addedUser.id,
+        application: '',
+        appLogin: '',
+        appPassword: '',
+      };
+      const listWithHiddenPassword = [...passwords, hiddenPassword];
 
-    const hiddenPassword: PasswordNew = {
-      id: maxId.id + 1,
-      userId: addedUser.id,
-      application: '',
-      appLogin: '',
-      appPassword: '',
-    };
-    const listWithHiddenPassword = [...passwords, hiddenPassword];
+      localStorage.setItem('passwordsFromServer', JSON.stringify(listWithHiddenPassword));
+    } else {
+      const hiddenPassword: PasswordNew = {
+        id: passwords.length + 1,
+        userId: addedUser.id,
+        application: '',
+        appLogin: '',
+        appPassword: '',
+      };
+      const listWithHiddenPassword = [...passwords, hiddenPassword];
 
-    localStorage.setItem('passwordsFromServer', JSON.stringify(listWithHiddenPassword));
+      localStorage.setItem('passwordsFromServer', JSON.stringify(listWithHiddenPassword));
+    }
   };
 
   const handleSubmit = (event: React.FormEvent) => {
