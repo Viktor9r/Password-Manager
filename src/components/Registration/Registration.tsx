@@ -56,6 +56,8 @@ export const Registration: React.FC<Props> = ({
     if (oldUsers.some((oldUser: { login: string; password: string; }) => oldUser.login === newLogin
       || oldUser.password === newPassword)) {
       setIsUserReg(true);
+
+      return null;
     }
 
     const addedUser: UserNew = {
@@ -81,7 +83,7 @@ export const Registration: React.FC<Props> = ({
     const listWithAddedUser = [...oldUsers, addedUser];
 
     localStorage.setItem('usersFromServer', JSON.stringify(listWithAddedUser));
-    if (passwords.length > 1 && newPassword.length >= 6) {
+    if (passwords.length > 1) {
       const maxId = passwords.reduce((acc, curr) => (
         acc.b > curr.b ? acc : curr
       ));
@@ -113,9 +115,7 @@ export const Registration: React.FC<Props> = ({
     event.preventDefault();
     const addedUser = getNewUser();
 
-    if (newPassword.length < 6) {
-      setPasswordLengthError(true);
-    } else if (addedUser && newPassword.length >= 6) {
+    if (addedUser && newPassword.length >= 6) {
       addUser(addedUser);
       setShowRegistration(false);
       setLoginVisible(true);
@@ -123,6 +123,7 @@ export const Registration: React.FC<Props> = ({
       setPasswordLengthError(false);
     } else {
       setIsUserReg(true);
+      setPasswordLengthError(false);
     }
 
     loadUsers();
