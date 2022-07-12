@@ -8,6 +8,7 @@ import React, {
 import classNames from 'classnames';
 import './PasswordsList.scss';
 import '../Password/Password.scss';
+import '../UpdatePasswordForm/UpdatePasswordForm.scss';
 import { Password } from '../Password/Password';
 import { AddPasswordForm } from '../AddPasswordForm/AddPasswordForm';
 import { UpdatePasswordForm } from '../UpdatePasswordForm/UpdatePasswordForm';
