@@ -91,7 +91,7 @@ export const AddPasswordForm: React.FC<Props> = ({
         <input
           type="text"
           placeholder="Enter application title"
-          className="add__input add__input--app"
+          className="add__field add__field--app"
           onChange={handleAppChange}
           value={newApp}
           required
@@ -99,21 +99,21 @@ export const AddPasswordForm: React.FC<Props> = ({
         <input
           type="text"
           placeholder="Enter new login"
-          className="add__input add__input--log"
+          className="add__field add__field--login"
           onChange={handleLoginChange}
           value={newLogin}
           required
         />
         <input
-          type="text"
-          placeholder="Enter password"
-          className="add__input add__input--pass"
+          type="password"
+          placeholder="Enter new password"
+          className="add__field add__field--password"
           onChange={handlePasswordChange}
           value={newPassword}
           required
         />
         <button
-          className="add__submit"
+          className="add__button"
           type="submit"
         >
           Add password

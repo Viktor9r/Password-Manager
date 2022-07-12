@@ -8,7 +8,7 @@
     align-self: center;
     margin: auto;
     border-radius: 10px;
-    background-color: rgb(217, 217, 217);
+    background-color: rgb(165, 191, 203);
     padding: 30px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -36,9 +36,10 @@
     background-size: 30px;
     background-repeat: no-repeat;
     background-position: 99%;
+    font-family: 'Montserrat';
 
-    &::placeholder {
-      font-family: 'Montserrat';
+    &_error {
+      border: 1px solid rgb(202, 0, 0);
     }
 
     &--login {
@@ -48,6 +49,7 @@
         background-image: none;
       }
     }
+
     &--password {
       background-size: 25px;
       background-position: 98.5%;
@@ -69,7 +71,8 @@
 
     &:hover {
       cursor: pointer;
-      background-color: #fff;
+      background-color: rgb(165, 191, 203);
+      font-weight: 700;
     }
 
     &--sign {

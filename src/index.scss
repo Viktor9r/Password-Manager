@@ -1,9 +1,10 @@
 html {
-  height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-image: url(https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?cs=srgb&dl=pexels-pixabay-531880.jpg&fm=jpg);
+  height: fit-content;
+  min-height: 100%;
 }
 
 body {

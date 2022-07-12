@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 import './PasswordsList.scss';
+import '../Password/Password.scss';
 import { Password } from '../Password/Password';
 import { AddPasswordForm } from '../AddPasswordForm/AddPasswordForm';
 import { UpdatePasswordForm } from '../UpdatePasswordForm/UpdatePasswordForm';
@@ -39,42 +40,44 @@ export const PasswordsList: React.FC<Props> = ({
   };
 
   return (
-    <div className="passwords">
+    <>
       {visiblePasswords.length !== 0
         ? (
           <>
             {listVisible && (
               <>
-                <div className="passwords__title">
-                  Welcome,
-                  {' '}
-                  {userLogin}
+                <div className="passwords">
+                  <div className="passwords__title">
+                    Welcome,
+                    {' '}
+                    {userLogin}
+                  </div>
+                  <AddPasswordForm
+                    passwords={visiblePasswords}
+                    loadPasswords={loadPasswords}
+                    userId={userId}
+                  />
+                  <button
+                    type="button"
+                    className="password__button password__button--back"
+                    onClick={backLogin}
+                  >
+                    Back to sign in
+                  </button>
                 </div>
-                <AddPasswordForm
-                  passwords={visiblePasswords}
-                  loadPasswords={loadPasswords}
-                  userId={userId}
-                />
-                <button
-                  type="button"
-                  className="password__back"
-                  onClick={backLogin}
-                >
-                  Back to sign in
-                </button>
-                <div className="passwords__title-list">Your paswords:</div>
               </>
             )}
           </>
         )
-        : ''}
-      {listVisible && (
+        : <div className="hidden"></div>}
+      {listVisible && visiblePasswords.length !== 0 ? (
         <>
           <ul className="passwords__list">
+            <div className="passwords__title-list">Your passwords:</div>
             {visiblePasswords.map(password => (
               <li
                 key={password.id}
-                className={classNames('password__item', {
+                className={classNames('passwords__item', {
                   hidden: password.application.length === 0
                 && password.appLogin.length === 0 && password.appPassword.length === 0,
                 })}
@@ -87,25 +90,25 @@ export const PasswordsList: React.FC<Props> = ({
                 {selectedPasswordId === password.id
                   ? (
                     <>
-                      <button
-                        type="button"
-                        className="passwords__edit"
-                        onClick={() => setSelectedPasswordId(0)}
-                      >
-                        Cancel
-                      </button>
                       <UpdatePasswordForm
                         loadPasswords={loadPasswords}
                         passId={password.id}
                         setSelectedPasswordId={setSelectedPasswordId}
                       />
+                      <button
+                        type="button"
+                        className="update__button"
+                        onClick={() => setSelectedPasswordId(0)}
+                      >
+                        Cancel
+                      </button>
                     </>
                   )
                   : (
                     <>
                       <button
                         type="button"
-                        className={classNames('password__edit', {
+                        className={classNames('password__button password__button--update', {
                           hidden: password.application.length === 0
                         && password.appLogin.length === 0 && password.appPassword.length === 0,
                         })}
@@ -119,7 +122,8 @@ export const PasswordsList: React.FC<Props> = ({
             ))}
           </ul>
         </>
-      )}
-    </div>
+      )
+        : (<div className="hidden"></div>)}
+    </>
   );
 };

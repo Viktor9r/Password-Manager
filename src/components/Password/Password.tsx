@@ -42,26 +42,32 @@ export const Password: React.FC<Props> = ({
         ? (
           <>
             <div className="password__field password__app">
-              Site/Application:
-              {' '}
-              {password.application}
+              <div className="password__values">
+                <span className="password__title">Site/Application:</span>
+                {' '}
+                {password.application}
+              </div>
             </div>
             <div className="password__field password__login">
-              Login:
-              {' '}
-              {password.appLogin}
+              <div className="password__values">
+                <span className="password__title">Login:</span>
+                {' '}
+                {password.appLogin}
+              </div>
             </div>
             <div className="password__field password__pass">
-              Password:
-              {' '}
-              {showPassword === true
-                ? (<span>{password.appPassword}</span>)
-                : (<span>{hideString}</span>)}
+              <div className="password__values">
+                <span className="password__title">Password:</span>
+                {' '}
+                {showPassword === true
+                  ? (<span>{password.appPassword}</span>)
+                  : (<span>{hideString}</span>)}
+              </div>
             </div>
             <div className="password__buttons-block">
               <button
                 type="button"
-                className="pasword__delete"
+                className="password__button"
                 onClick={() => removePassword()}
               >
                 Delete password

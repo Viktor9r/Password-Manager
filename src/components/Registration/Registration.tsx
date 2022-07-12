@@ -6,6 +6,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react';
+import classNames from 'classnames';
 import './Registration.scss';
 
 type Props = {
@@ -15,6 +16,10 @@ type Props = {
   setLoginVisible: Dispatch<SetStateAction<boolean>>,
   loadPasswords: () => void,
   passwords: PasswordNew[],
+  setShowError: Dispatch<SetStateAction<boolean>>,
+  isUserReg: boolean,
+  setPasswordLengthError: Dispatch<SetStateAction<boolean>>,
+  passwordLengthError: boolean,
 };
 
 export const Registration: React.FC<Props> = ({
@@ -24,6 +29,10 @@ export const Registration: React.FC<Props> = ({
   setLoginVisible,
   loadPasswords,
   passwords,
+  setShowError,
+  isUserReg,
+  setPasswordLengthError,
+  passwordLengthError,
 }) => {
   const [newLogin, setNewLogin] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -47,8 +56,6 @@ export const Registration: React.FC<Props> = ({
     if (oldUsers.some((oldUser: { login: string; password: string; }) => oldUser.login === newLogin
       || oldUser.password === newPassword)) {
       setIsUserReg(true);
-
-      return null;
     }
 
     const addedUser: UserNew = {
@@ -64,6 +71,8 @@ export const Registration: React.FC<Props> = ({
     setShowRegistration(false);
     setLoginVisible(true);
     setIsUserReg(false);
+    setShowError(false);
+    setPasswordLengthError(false);
   };
 
   const addUser = (addedUser: UserNew) => {
@@ -72,7 +81,7 @@ export const Registration: React.FC<Props> = ({
     const listWithAddedUser = [...oldUsers, addedUser];
 
     localStorage.setItem('usersFromServer', JSON.stringify(listWithAddedUser));
-    if (passwords.length > 1) {
+    if (passwords.length > 1 && newPassword.length >= 6) {
       const maxId = passwords.reduce((acc, curr) => (
         acc.b > curr.b ? acc : curr
       ));
@@ -104,16 +113,21 @@ export const Registration: React.FC<Props> = ({
     event.preventDefault();
     const addedUser = getNewUser();
 
-    if (addedUser) {
+    if (newPassword.length < 6) {
+      setPasswordLengthError(true);
+    } else if (addedUser && newPassword.length >= 6) {
       addUser(addedUser);
       setShowRegistration(false);
       setLoginVisible(true);
+      setIsUserReg(false);
+      setPasswordLengthError(false);
     } else {
       setIsUserReg(true);
     }
 
     loadUsers();
     loadPasswords();
+    setShowError(false);
 
     clearForm();
   };
@@ -123,18 +137,24 @@ export const Registration: React.FC<Props> = ({
       <form
         className="registration__form"
         onSubmit={handleSubmit}
+        method="post"
       >
+        <div className="registration__title">Registration:</div>
         <input
           type="text"
-          className="registration__field"
+          className={classNames('registration__field registration__field--login', {
+            registration__field_error: isUserReg || passwordLengthError,
+          })}
           placeholder="Login"
           value={newLogin}
           onChange={handleLoginChange}
           required
         />
         <input
-          type="text"
-          className="registration__field"
+          type="password"
+          className={classNames('registration__field registration__field--password', {
+            registration__field_error: isUserReg || passwordLengthError,
+          })}
           placeholder="Password"
           value={newPassword}
           onChange={handlePasswordChange}
@@ -142,14 +162,14 @@ export const Registration: React.FC<Props> = ({
         />
         <button
           type="submit"
-          className="registration__submit"
+          className="registration__button"
         >
           Sign Up
         </button>
       </form>
       <button
         type="button"
-        className="registration__login"
+        className="registration__button registration__login"
         onClick={backToLogin}
       >
         Back to sign in

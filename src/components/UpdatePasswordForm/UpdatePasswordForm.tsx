@@ -75,33 +75,37 @@ export const UpdatePasswordForm: React.FC<Props> = ({
       <form
         className="update__form"
         onSubmit={handleSubmit}
+        method="post"
       >
         <input
           type="text"
-          className="update__field"
+          className="update__field update__field--app"
           placeholder="New Site/App"
           value={newApp}
           onChange={handleAppChange}
+          required
         />
         <input
           type="text"
-          className="update__field"
+          className="update__field update__field--login"
           placeholder="New Login"
           value={newLogin}
           onChange={handleLoginChange}
+          required
         />
         <input
           type="password"
-          className="update__field"
+          className="update__field update__field--password"
           placeholder="New Password"
           value={newPassword}
           onChange={handlePasswordChange}
+          required
         />
         <button
           type="submit"
-          className="update__button"
+          className="update__button update__button--update"
         >
-          Submit
+          Update
         </button>
       </form>
     </div>

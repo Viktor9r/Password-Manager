@@ -7,6 +7,8 @@ import React, {
   SetStateAction,
 } from 'react';
 import './Login.scss';
+import classNames from 'classnames';
+import '../Registration/Registration.scss';
 import { PasswordsList } from '../PasswordsList/PasswordsList';
 import { Registration } from '../Registration/Registration';
 
@@ -32,6 +34,7 @@ export const Login: React.FC<Props> = ({
   const [loginVisible, setLoginVisible] = useState(true);
   const [listVisible, setVisibleList] = useState(true);
   const [showError, setShowError] = useState(false);
+  const [passwordLengthError, setPasswordLengthError] = useState(false);
 
   const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLogin(event.target.value);
@@ -93,23 +96,28 @@ export const Login: React.FC<Props> = ({
             <form
               className="login__form"
               onSubmit={handleSubmit}
+              method="post"
             >
               <div className="login__title">
                 Login:
               </div>
               <input
                 type="text"
-                className="login__field login__field--login"
-                placeholder="Enter login"
+                className={classNames('login__field login__field--login', {
+                  login__field_error: showError,
+                })}
+                placeholder="Your login"
                 required
                 name="Login"
                 value={login}
                 onChange={handleLoginChange}
               />
               <input
-                type="text"
-                className="login__field login__field--password"
-                placeholder="Enter password"
+                type="password"
+                className={classNames('login__field login__field--password', {
+                  login__field_error: showError || passwordLengthError,
+                })}
+                placeholder="Your password"
                 required
                 name="Password"
                 value={password}
@@ -160,11 +168,15 @@ export const Login: React.FC<Props> = ({
              setLoginVisible={setLoginVisible}
              loadPasswords={loadPasswords}
              passwords={passwords}
+             setShowError={setShowError}
+             isUserReg={isUserReg}
+             setPasswordLengthError={setPasswordLengthError}
+             passwordLengthError={passwordLengthError}
            />
          </>
        )}
-      {isUserReg && <div className="registration__already">User with the same password ot login is already registered. Please, enter other data or sign in!</div>}
-
+      {isUserReg && <div className="registration__error">User with the same password ot login is already registered. Please, enter other data or sign in!</div>}
+      {passwordLengthError && <div className="registration__error">Password should be at list 6 characters</div>}
     </>
   );
 };
